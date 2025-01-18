@@ -6,4 +6,3 @@ requests
 supabase
 uuid
 reportlab
-email
