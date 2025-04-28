@@ -1,22 +1,23 @@
 from fastapi import FastAPI
+from app.routers import mail, map, payment, checkPayment
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import mail, map
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or specify allowed origins like ["https://yourdomain.com"]
+    allow_origins=["*"],  # or your domain
     allow_credentials=True,
-    allow_methods=["*"],  # Or specify like ["GET", "POST"]
+    allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 # Include routers
 app.include_router(mail.router, prefix="/api", tags=["Mail"])
 app.include_router(map.router, prefix="/api", tags=["Map"])
-# app.include_router(payment.router, prefix="/api", tags=["Payment"])
-# app.include_router(phonepe.router, prefix="/api", tags=["Phonepe"])
-# app.include_router(phonepepy.router, prefix="/api", tags=["Phonepepayment"])
+app.include_router(payment.router, prefix="/api", tags=["Payment"])
+app.include_router(checkPayment.router, prefix="/api", tags=["updatePayment"])
 
 @app.get("/")
 async def root():
